@@ -2,8 +2,6 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 
 export const LibraryForm = ({ library, onSubmit }) => {
-  console.log(library);
-  console.log(library.name);
   const { register, handleSubmit } = useForm( { defaultValues: { name: library ? library.name : "", country: library ? library.country : "", city: library ? library.city : "", postal_code: library ? library.postal_code : "", street: library ? library.street : "", phonenumber: library ? library.phonenumber : "" } });
     const submitHandler = handleSubmit((data) =>  {
         onSubmit(data);
