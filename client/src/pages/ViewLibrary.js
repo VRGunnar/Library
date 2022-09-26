@@ -26,9 +26,6 @@ export const ViewLibrary = () => {
             <Link className='btn btn-secondary mt-3 px-5' to={`students`}>View Students</Link>
         </div>
         <div className="col-lg-3 col-6">
-            <Link className='btn btn-secondary mt-3 px-5' to={`students`}>View Students</Link>
-        </div>
-        <div className="col-lg-3 col-6">
             <Link className='btn btn-secondary mt-3 px-5' to={`books`}>View Books</Link>
         </div>
         <div className="col-lg-3 col-6">

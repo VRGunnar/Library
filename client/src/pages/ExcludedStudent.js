@@ -21,7 +21,7 @@ export const ExcludedStudent = () => {
           <div className="row justify-content-evenly g-3">
             {studentList.length <= 0 &&
               <h5 className='m-0 p-0'>
-                There are currently no students available.
+                There are currently no excluded students available.
               </h5>
             }
             {studentList.map((student, key) => (
