@@ -22,6 +22,12 @@ export const LibraryList = () => {
         <h3>What library are you looking for?</h3>
         <div className="container mt-5">
           <div className="row justify-content-between g-3">
+            {console.log(libraryList.length)}
+            {libraryList.length <= 0 &&
+              <h5 className='m-0 p-0'>
+                There are currently no libraries available.
+              </h5>
+            }
             {libraryList.map((library, key) => (
               <div key={key} className="col-lg-3 col-md-6 border d-flex flex-column justify-content-center p-2 position-relative">
                   <h5>{library.name}</h5>

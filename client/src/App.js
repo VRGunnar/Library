@@ -9,6 +9,7 @@ import { StudentList } from './pages/StudentList';
 import { CreateBook } from "./pages/CreateBook";
 import { EditStudent } from "./pages/EditStudent";
 import { BookList } from './pages/BookList';
+import { ExcludedStudent } from './pages/ExcludedStudent';
 
 const App = () => {
   return (
@@ -30,6 +31,7 @@ const App = () => {
         <Route path="/create" element={<CreateLibrary />}></Route>
         
         <Route path="/:id/students" element={<StudentList />}></Route>
+        <Route path="/:id/students/excluded_students" element={<ExcludedStudent />}></Route>
         <Route path="/:id/students/create" element={<CreateStudent />}></Route>
         <Route path="/student/:id/edit" element={<EditStudent />}></Route>
 

@@ -37,8 +37,12 @@ const StudentSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    library :{
+    library:{
         type: String,
+        required: true,
+    },
+    excluded: {
+        type: Boolean,
         required: true,
     }
 },

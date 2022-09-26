@@ -29,8 +29,9 @@ export const CreateStudent = () => {
         const street = data['street'];
         const phonenumber = data['phonenumber'];
         const library_name = library.name;
+        const excluded = data['excluded'];
         
-        await Axios.post('http://localhost:3001/student/create', { first_name: first_name, last_name: last_name, birthdate: birthdate, study_subject: study_subject, country: country, city: city, postal_code: postal_code, street: street, phonenumber: phonenumber, library: library_name });
+        await Axios.post('http://localhost:3001/student/create', { first_name: first_name, last_name: last_name, birthdate: birthdate, study_subject: study_subject, country: country, city: city, postal_code: postal_code, street: street, phonenumber: phonenumber, library: library_name, excluded: excluded });
         
         navigate(`/`);
     };

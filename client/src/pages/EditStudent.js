@@ -28,20 +28,21 @@ export const EditStudent = () => {
         const postal_code = data['postal_code'];
         const street = data['street'];
         const phonenumber = data['phonenumber'];
+        const excluded = data['excluded'];
 
         await Axios.post(`http://localhost:3001/student/${id}/edit`, {
-            first_name: first_name, last_name: last_name, birthdate: birthdate, study_subject: study_subject, country: country, city: city, postal_code: postal_code, street: street, phonenumber: phonenumber, library: student.library
+            first_name: first_name, last_name: last_name, birthdate: birthdate, study_subject: study_subject, country: country, city: city, postal_code: postal_code, street: street, phonenumber: phonenumber, library: student.library, excluded: excluded
         });
         
         navigate("/");
     };
-     
+
     return student ?
      (
         <div className='container'>
             <div className='mt-3'>
                 <h3>Edit Student</h3>
-                <StudentForm student={student} onSubmit={onSubmit}/> 
+                <StudentForm student={student} onSubmit={onSubmit}/>
             </div>
         </div> 
     ) : (

@@ -81,7 +81,22 @@ app.get("/libraries/:id/students", (req, res) => {
   let library_name = "";
   LibraryModel.findById(id, (err, library) => {
     library_name = library.name;
-    StudentModel.find({library: library_name}, (err, students) => {
+    StudentModel.find({library: library_name, excluded: false}, (err, students) => {
+      if (err) {
+        res.send(err);
+      } else {
+        res.send(students);
+      }
+    });
+  });
+});
+
+app.get("/libraries/:id/excluded_students", (req, res) => {
+  const id = req.params.id;
+  let library_name = "";
+  LibraryModel.findById(id, (err, library) => {
+    library_name = library.name;
+    StudentModel.find({library: library_name, excluded: true}, (err, students) => {
       if (err) {
         res.send(err);
       } else {
@@ -127,6 +142,7 @@ app.post("/student/create", (req, res) => {
         student.street = req.body.street;
         student.phonenumber = req.body.phonenumber;
         student.library = req.body.library;
+        student.excluded = req.body.excluded;
 
         student
           .save()
