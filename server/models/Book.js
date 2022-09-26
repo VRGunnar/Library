@@ -35,12 +35,19 @@ const BookSchema = new mongoose.Schema({
     },
     ISBN13: {
         type: String,
+        required: false,
     },
     number_of_pages: {
-        type: String
+        type: String,
+        required: false,
     },
     library :{
-        type: mongoose.Schema.Types.ObjectId, ref:'Library'
+        type: String,
+        required: true,
+    },
+    student :{
+        type: String,
+        required: false,
     }
 },
 {

@@ -25,12 +25,12 @@ const LibrarySchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    students: [
-        {type: mongoose.Schema.Types.ObjectId, ref:'Student'}
-    ],
-    books: [
-        {type: mongoose.Schema.Types.ObjectId, ref:'Book'}
-    ]
+    // students: [
+    //     {type: mongoose.Schema.Types.ObjectId, ref:'Student'}
+    // ],
+    // books: [
+    //     {type: mongoose.Schema.Types.ObjectId, ref:'Book'}
+    // ]
 },
 {
     timestamps: true

@@ -2,6 +2,9 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const LibraryModel = require("./models/Library");
+const StudentModel = require("./models/Student");
+const BookModel = require("./models/Book");
+
 
 const app = express();
 app.use(express.json());
@@ -14,6 +17,7 @@ mongoose.connect(
   }
 );
 
+//Library routes
 app.get("/", async (req, res) => {
   LibraryModel.find({}, (err, libraries) => {
     if (err) {
@@ -71,6 +75,98 @@ app.delete("/delete/:id", (req, res) => {
     LibraryModel.findByIdAndRemove(id).exec();
 });
 
+//Student routes
+app.get("/libraries/:id/students", (req, res) => {
+  const id = req.params.id;
+  let library_name = "";
+  LibraryModel.findById(id, (err, library) => {
+    library_name = library.name;
+    StudentModel.find({library: library_name}, (err, students) => {
+      if (err) {
+        res.send(err);
+      } else {
+        res.send(students);
+      }
+    });
+  });
+});
+
+app.get("/student/:id", (req, res) => {
+  const id = req.params.id;
+  StudentModel.findById(id, (err, student) => {
+    res.json(student);
+  });
+});
+
+app.post("/student/create", (req, res) => {
+    const student = new StudentModel(req.body);
+    student
+      .save()
+      .then((student) => {
+        res.json(student);
+      })
+      .catch((err) => {
+        res.status(500).send(err.message);
+      });
+  });
+
+  app.post("/student/:id/edit", (req, res) => {
+    const id = req.params.id;
+    StudentModel.findById(id, (err, student) => {
+      if (!student) {
+        res.status(404).send("Student not found.");
+      } else {
+        console.log(res);
+        student.first_name = req.body.first_name;
+        student.last_name = req.body.last_name;
+        student.birthdate = req.body.birthdate;
+        student.study_subject = req.body.study_subject;
+        student.country = req.body.country;
+        student.city = req.body.city;
+        student.postal_code = req.body.postal_code;
+        student.street = req.body.street;
+        student.phonenumber = req.body.phonenumber;
+        student.library = req.body.library;
+
+        student
+          .save()
+          .then((student) => {
+            res.json(student);
+          })
+          .catch((err) => res.status(500).send(err.message));
+      }
+    });
+  });
+
+
+  //Book routes
+  app.get("/libraries/:id/books", (req, res) => {
+    const id = req.params.id;
+    let library_name = "";
+    LibraryModel.findById(id, (err, library) => {
+      library_name = library.name;
+      BookModel.find({library: library_name}, (err, books) => {
+        if (err) {
+          res.send(err);
+        } else {
+          res.send(books);
+        }
+      });
+    });
+  });
+
+  app.post("/book/create", (req, res) => {
+    const book = new BookModel(req.body);
+    console.log(req.body);
+    book
+      .save()
+      .then((book) => {
+        res.json(book);
+      })
+      .catch((err) => {
+        res.status(500).send(err.message);
+      });
+  });
 app.listen(3001, () => {
   console.log("Server running on port 3001...");
 });
