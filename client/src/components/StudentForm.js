@@ -2,8 +2,8 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 
 export const StudentForm = ({ student, onSubmit }) => {
-  const { register, handleSubmit } = useForm( { defaultValues: { first_name: student ? student.first_name : "", last_name: student ? student.last_name : "", birthdate: student ? student.birthdate : "", study_subject: student ? student.study_subject : "", country: student ? student.country : "", city: student ? student.city : "", postal_code: student ? student.postal_code : "", street: student ? student.street : "", phonenumber: student ? student.phonenumber : "" } });
-    const submitHandler = handleSubmit((data) =>  {
+  const { register, handleSubmit } = useForm( { defaultValues: { first_name: student ? student.first_name : "", last_name: student ? student.last_name : "", birthdate: student ? student.birthdate : "", study_subject: student ? student.study_subject : "", country: student ? student.country : "", city: student ? student.city : "", postal_code: student ? student.postal_code : "", street: student ? student.street : "", phonenumber: student ? student.phonenumber : "", excluded: student ? student.excluded : "" } });
+  const submitHandler = handleSubmit((data) =>  {
         onSubmit(data);
     });
 
@@ -97,6 +97,17 @@ export const StudentForm = ({ student, onSubmit }) => {
             name="phonenumber"
             id="phonenumber"
           />
+        </div>
+        <div className="form-group mt-2 w-2 h-2">
+          <label htmlFor="excluded">Exclude this student:</label>
+          <div className="input-group-text">
+            <input type="checkbox"
+            {...register("excluded")}
+            value="true"
+            name="excluded"
+            id="excluded"
+            />
+          </div>
         </div>
         <div className="form-group mt-3">
           <button type="submit" className="btn btn-primary">

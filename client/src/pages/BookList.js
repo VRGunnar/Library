@@ -19,6 +19,11 @@ export const BookList = () => {
         <h3>Books</h3>
         <div className="container my-3">
           <div className="row justify-content-between g-3">
+            {bookList.length <= 0 &&
+              <h5 className='m-0 p-0'>
+                There are currently no books available.
+              </h5>
+            }
             {bookList.map((book, key) => (
               <div key={key} className="col-lg-3 col-md-6 border d-flex flex-column justify-content-center p-2 position-relative">
                   <h5 className='mb-3'>{book.title}</h5>
