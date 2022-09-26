@@ -26,7 +26,10 @@ export const LibraryList = () => {
               <div key={key} className="col-lg-3 col-md-6 border d-flex flex-column justify-content-center p-2 position-relative">
                   <h5>{library.name}</h5>
                   <p className="m-0">{library.street}, {library.city} {library.postal_code}, {library.country}</p>
-                  <Link className='btn btn-secondary mt-3' to={`/edit/${library._id}`}>Edit</Link>
+                  <div className='d-flex justify-content-evenly'>
+                    <Link className='btn btn-secondary mt-3 px-4' to={`/${library._id}`}>View</Link>
+                    <Link className='btn btn-secondary mt-3 px-4' to={`/edit/${library._id}`}>Edit</Link>
+                  </div>
                   <button onClick={() => deleteLibrary(library._id)} className='position-absolute top-0 end-0'>&#10005;</button>
               </div>
             ))}
