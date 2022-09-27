@@ -52,6 +52,7 @@ const BookSchema = new mongoose.Schema({
     excluded: {
         type: Boolean,
         required: true,
+        default: false
     }
 },
 {

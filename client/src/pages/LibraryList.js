@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from "react-router-dom";
 
 export const LibraryList = () => {
 
   const [libraryList, setLibraryList] = useState([]);
-
+  const navigate = useNavigate();
   useEffect(() => {
     Axios.get('http://localhost:3001/').then((response) => {
       setLibraryList(response.data);
@@ -14,6 +14,7 @@ export const LibraryList = () => {
 
   const deleteLibrary = (id) => {
     Axios.delete(`http://localhost:3001/delete/${id}`);
+    navigate('/');
   };
 
   return (
@@ -22,7 +23,6 @@ export const LibraryList = () => {
         <h3>What library are you looking for?</h3>
         <div className="container mt-5">
           <div className="row justify-content-between g-3">
-            {console.log(libraryList.length)}
             {libraryList.length <= 0 &&
               <h5 className='m-0 p-0'>
                 There are currently no libraries available.

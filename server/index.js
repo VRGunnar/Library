@@ -5,6 +5,7 @@ const LibraryModel = require("./models/Library");
 const StudentModel = require("./models/Student");
 const BookModel = require("./models/Book");
 const ReferenceModel = require("./models/Reference");
+const ReferenceHistoryModel = require("./models/ReferenceHistory");
 const referralCodes = require("referral-codes");
 
 const app = express();
@@ -138,7 +139,6 @@ app.post("/student/:id/edit", (req, res) => {
     if (!student) {
       res.status(404).send("Student not found.");
     } else {
-      console.log(res);
       student.first_name = req.body.first_name;
       student.last_name = req.body.last_name;
       student.birthdate = req.body.birthdate;
@@ -241,6 +241,26 @@ app.post("/book/:id/edit", (req, res) => {
 });
 
 //reference
+app.get("/libraries/:id/references", (req, res) => {
+  ReferenceModel.find({ library_id: req.params.id }, (err, references) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(references);
+    }
+  });
+});
+
+app.get("/reference/:id", (req, res) => {
+  ReferenceModel.findById(req.params.id, (err, references) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(references);
+    }
+  });
+});
+
 app.post("/create/reference", (req, res) => {
   const code = referralCodes.generate({
     length: 10,
@@ -259,6 +279,34 @@ app.post("/create/reference", (req, res) => {
     .save()
     .then((reference) => {
       res.json(reference);
+    })
+    .catch((err) => {
+      res.status(500).send(err.message);
+    });
+});
+
+app.delete("/delete/reference/:id", (req, res) => {
+  const id = req.params.id;
+  ReferenceModel.findByIdAndRemove(id).exec();
+});
+
+//history
+app.get("/libraries/:id/loans/history_references", (req, res) => {
+  ReferenceHistoryModel.find({ library_id: req.params.id }, (err, references) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(references);
+    }
+  });
+});
+
+app.post("/create/history_reference", (req, res) => {
+  const history = new ReferenceHistoryModel(req.body);
+  history
+    .save()
+    .then((history) => {
+      res.json(history);
     })
     .catch((err) => {
       res.status(500).send(err.message);
