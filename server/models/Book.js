@@ -48,6 +48,10 @@ const BookSchema = new mongoose.Schema({
     student :{
         type: String,
         required: false,
+    },
+    excluded: {
+        type: Boolean,
+        required: true,
     }
 },
 {

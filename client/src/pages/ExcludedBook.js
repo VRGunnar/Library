@@ -3,12 +3,12 @@ import Axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useParams} from 'react-router-dom';
 
-export const BookList = () => {
+export const ExcludedBook = () => {
 
   const [bookList, setBookList] = useState([]);
   const id = useParams().id;
   useEffect(() => {
-    Axios.get(`http://localhost:3001/libraries/${id}/books`).then((res) => {
+    Axios.get(`http://localhost:3001/libraries/${id}/books_excluded`).then((res) => {
         setBookList(res.data);
     });
   }, []);
@@ -16,15 +16,12 @@ export const BookList = () => {
   return (
     <div className="container">
       <div className="mt-3">
-        <div className='d-flex flex-col justify-content-between'>
-          <h3>Books</h3>
-          <Link className='btn btn-dark text-white p-2 text-black text-decoration-none' to={`excluded_books`}>Excluded books</Link>
-        </div>
+        <h3>Books</h3>
         <div className="container my-3">
           <div className="row justify-content-between g-3">
             {bookList.length <= 0 &&
               <h5 className='m-0 p-0'>
-                There are currently no books available.
+                There are currently no excluded books available.
               </h5>
             }
             {bookList.map((book, key) => (

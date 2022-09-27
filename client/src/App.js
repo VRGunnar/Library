@@ -10,6 +10,8 @@ import { CreateBook } from "./pages/CreateBook";
 import { EditStudent } from "./pages/EditStudent";
 import { BookList } from './pages/BookList';
 import { ExcludedStudent } from './pages/ExcludedStudent';
+import { ExcludedBook } from './pages/ExcludedBook';
+import { EditBook } from "./pages/EditBook";
 
 const App = () => {
   return (
@@ -37,6 +39,8 @@ const App = () => {
 
         <Route path="/:id/books/create" element={<CreateBook />}></Route>
         <Route path="/:id/books" element={<BookList />}></Route>
+        <Route path="/:id/books/excluded_books" element={<ExcludedBook />}></Route>
+        <Route path="/book/:id/edit" element={<EditBook />}></Route>
       </Routes> 
     </div>
   );
