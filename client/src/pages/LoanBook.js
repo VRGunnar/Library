@@ -8,6 +8,7 @@ export const LoanBook = () => {
   const navigate = useNavigate();
   const [books, setBooks] = useState();
   const [students, setStudents] = useState();
+  const [library, setLibrary] = useState();
   const id = useParams().id;
 
   useEffect(() => {
@@ -21,22 +22,29 @@ export const LoanBook = () => {
         setStudents(result.data);
       };
     fetchStudents();
+    const fetchLibrary = async () => {
+        const result = await Axios.get(`http://localhost:3001/${id}`);
+        setLibrary(result.data);
+      };
+    fetchLibrary();
   }, []);
 
   const onSubmit = async (data) => {
     alert(JSON.stringify(data));
     const bookId = data["book"]; //id or name?
     const studentId = data["student"]; //id or name?
+    const libraryId = library._id;
 
     await Axios.post(`http://localhost:3001/create/reference`, {
       book_id: bookId,
       student_id: studentId,
+      library_id: libraryId,
       reference_code: "",
       due_date: ""
     });
 
     const book = await Axios.get(`http://localhost:3001/book/${bookId}`);
-    console.log(book);
+    
     await Axios.post(`http://localhost:3001/book/${bookId}/edit`, {
       title: book.data.title,
       author: book.data.author,

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const ReferenceSchema = new mongoose.Schema({
+const ReferenceHistorySchema = new mongoose.Schema({
     student_id: {
         type: String,
         required: true,
@@ -26,5 +26,5 @@ const ReferenceSchema = new mongoose.Schema({
     timestamps: true
 });
 
-const Reference = mongoose.model("Reference", ReferenceSchema);
-module.exports = Reference;
+const ReferenceHistory = mongoose.model("ReferenceHistory", ReferenceHistorySchema);
+module.exports = ReferenceHistory;

@@ -12,7 +12,7 @@ export const ExcludedBook = () => {
         setBookList(res.data);
     });
   }, []);
-  console.log(bookList);
+  
   return (
     <div className="container">
       <div className="mt-3">

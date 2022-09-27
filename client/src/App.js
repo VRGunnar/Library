@@ -13,7 +13,8 @@ import { ExcludedStudent } from './pages/ExcludedStudent';
 import { ExcludedBook } from './pages/ExcludedBook';
 import { EditBook } from "./pages/EditBook";
 import { LoanBook } from "./pages/LoanBook";
-
+import { LoanList } from "./pages/LoanList";
+import { HistoryLoans } from "./pages/HistoryLoans";
 
 const App = () => {
   return (
@@ -43,7 +44,11 @@ const App = () => {
         <Route path="/:id/books" element={<BookList />}></Route>
         <Route path="/:id/books/excluded_books" element={<ExcludedBook />}></Route>
         <Route path="/book/:id/edit" element={<EditBook />}></Route>
+
         <Route path="/:id/books/loan" element={<LoanBook />}></Route>
+        <Route path="/:id/loans" element={<LoanList />}></Route>
+
+        <Route path="/:id/loans/history" element={<HistoryLoans />}></Route>
       </Routes> 
     </div>
   );

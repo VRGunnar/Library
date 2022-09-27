@@ -107,7 +107,7 @@ export const BookForm = ({ book, onSubmit }) => {
         <label htmlFor="ISBN13">ISBN13:</label>
         <input
           className="form-control"
-          {...register("ISBN13", { required: "Required" })}
+          {...register("ISBN13", { required: "Required"})}
           type="text"
           name="ISBN13"
           id="ISBN13"
@@ -117,7 +117,7 @@ export const BookForm = ({ book, onSubmit }) => {
         <label htmlFor="number_of_pages">Number of pages:</label>
         <input
           className="form-control"
-          {...register("number_of_pages", { required: "Required" })}
+          {...register("number_of_pages", { required: "Required"})}
           type="text"
           name="number_of_pages"
           id="number_of_pages"

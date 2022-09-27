@@ -12,7 +12,6 @@ export const EditLibrary = () => {
     useEffect(() => {
         const fetchLibrary = async () => {
             const result = await Axios.get(`http://localhost:3001/${id}`);
-            console.log(result);
             setLibrary(result.data);
         }
         fetchLibrary();
