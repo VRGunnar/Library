@@ -5,7 +5,6 @@ const LibraryModel = require("./models/Library");
 const StudentModel = require("./models/Student");
 const BookModel = require("./models/Book");
 
-
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -71,8 +70,8 @@ app.post("/:id", (req, res) => {
 });
 
 app.delete("/delete/:id", (req, res) => {
-    const id = req.params.id;
-    LibraryModel.findByIdAndRemove(id).exec();
+  const id = req.params.id;
+  LibraryModel.findByIdAndRemove(id).exec();
 });
 
 //Student routes
@@ -81,13 +80,16 @@ app.get("/libraries/:id/students", (req, res) => {
   let library_name = "";
   LibraryModel.findById(id, (err, library) => {
     library_name = library.name;
-    StudentModel.find({library: library_name, excluded: false}, (err, students) => {
-      if (err) {
-        res.send(err);
-      } else {
-        res.send(students);
+    StudentModel.find(
+      { library: library_name, excluded: false },
+      (err, students) => {
+        if (err) {
+          res.send(err);
+        } else {
+          res.send(students);
+        }
       }
-    });
+    );
   });
 });
 
@@ -96,13 +98,16 @@ app.get("/libraries/:id/excluded_students", (req, res) => {
   let library_name = "";
   LibraryModel.findById(id, (err, library) => {
     library_name = library.name;
-    StudentModel.find({library: library_name, excluded: true}, (err, students) => {
-      if (err) {
-        res.send(err);
-      } else {
-        res.send(students);
+    StudentModel.find(
+      { library: library_name, excluded: true },
+      (err, students) => {
+        if (err) {
+          res.send(err);
+        } else {
+          res.send(students);
+        }
       }
-    });
+    );
   });
 });
 
@@ -114,75 +119,125 @@ app.get("/student/:id", (req, res) => {
 });
 
 app.post("/student/create", (req, res) => {
-    const student = new StudentModel(req.body);
-    student
-      .save()
-      .then((student) => {
-        res.json(student);
-      })
-      .catch((err) => {
-        res.status(500).send(err.message);
-      });
+  const student = new StudentModel(req.body);
+  student
+    .save()
+    .then((student) => {
+      res.json(student);
+    })
+    .catch((err) => {
+      res.status(500).send(err.message);
+    });
+});
+
+app.post("/student/:id/edit", (req, res) => {
+  const id = req.params.id;
+  StudentModel.findById(id, (err, student) => {
+    if (!student) {
+      res.status(404).send("Student not found.");
+    } else {
+      console.log(res);
+      student.first_name = req.body.first_name;
+      student.last_name = req.body.last_name;
+      student.birthdate = req.body.birthdate;
+      student.study_subject = req.body.study_subject;
+      student.country = req.body.country;
+      student.city = req.body.city;
+      student.postal_code = req.body.postal_code;
+      student.street = req.body.street;
+      student.phonenumber = req.body.phonenumber;
+      student.library = req.body.library;
+      student.excluded = req.body.excluded;
+
+      student
+        .save()
+        .then((student) => {
+          res.json(student);
+        })
+        .catch((err) => res.status(500).send(err.message));
+    }
   });
+});
 
-  app.post("/student/:id/edit", (req, res) => {
-    const id = req.params.id;
-    StudentModel.findById(id, (err, student) => {
-      if (!student) {
-        res.status(404).send("Student not found.");
+//Book routes
+app.get("/libraries/:id/books", (req, res) => {
+  const id = req.params.id;
+  let library_name = "";
+  LibraryModel.findById(id, (err, library) => {
+    library_name = library.name;
+    BookModel.find({ library: library_name, excluded: false }, (err, books) => {
+      if (err) {
+        res.send(err);
       } else {
-        console.log(res);
-        student.first_name = req.body.first_name;
-        student.last_name = req.body.last_name;
-        student.birthdate = req.body.birthdate;
-        student.study_subject = req.body.study_subject;
-        student.country = req.body.country;
-        student.city = req.body.city;
-        student.postal_code = req.body.postal_code;
-        student.street = req.body.street;
-        student.phonenumber = req.body.phonenumber;
-        student.library = req.body.library;
-        student.excluded = req.body.excluded;
-
-        student
-          .save()
-          .then((student) => {
-            res.json(student);
-          })
-          .catch((err) => res.status(500).send(err.message));
+        res.send(books);
       }
     });
   });
+});
 
-
-  //Book routes
-  app.get("/libraries/:id/books", (req, res) => {
-    const id = req.params.id;
-    let library_name = "";
-    LibraryModel.findById(id, (err, library) => {
-      library_name = library.name;
-      BookModel.find({library: library_name}, (err, books) => {
-        if (err) {
-          res.send(err);
-        } else {
-          res.send(books);
-        }
-      });
+app.get("/libraries/:id/books_excluded", (req, res) => {
+  const id = req.params.id;
+  let library_name = "";
+  LibraryModel.findById(id, (err, library) => {
+    library_name = library.name;
+    BookModel.find({ library: library_name, excluded: true }, (err, books) => {
+      if (err) {
+        res.send(err);
+      } else {
+        res.send(books);
+      }
     });
   });
+});
 
-  app.post("/book/create", (req, res) => {
-    const book = new BookModel(req.body);
-    console.log(req.body);
-    book
-      .save()
-      .then((book) => {
-        res.json(book);
-      })
-      .catch((err) => {
-        res.status(500).send(err.message);
-      });
+app.get("/book/:id", (req, res) => {
+  const id = req.params.id;
+  BookModel.findById(id, (err, book) => {
+    res.json(book);
   });
+});
+
+app.post("/book/create", (req, res) => {
+  const book = new BookModel(req.body);
+  book
+    .save()
+    .then((book) => {
+      res.json(book);
+    })
+    .catch((err) => {
+      res.status(500).send(err.message);
+    });
+});
+
+app.post("/book/:id/edit", (req, res) => {
+  const id = req.params.id;
+  BookModel.findById(id, (err, book) => {
+    if (!book) {
+      res.status(404).send("Book not found.");
+    } else {
+      book.title = req.body.title;
+      book.author = req.body.author;
+      book.rating = req.body.rating;
+      book.language = req.body.language;
+      book.genre = req.body.genre;
+      book.description = req.body.description;
+      book.publisher = req.body.publisher;
+      book.publication_date = req.body.publication_date;
+      book.ISBN13 = req.body.ISBN13;
+      book.number_of_pages = req.body.number_of_pages;
+      book.library = req.body.library;
+      book.excluded = req.body.excluded;
+
+      book
+        .save()
+        .then((book) => {
+          res.json(book);
+        })
+        .catch((err) => res.status(500).send(err.message));
+    }
+  });
+});
+
 app.listen(3001, () => {
   console.log("Server running on port 3001...");
 });

@@ -30,8 +30,9 @@ export const CreateBook = () => {
         const ISBN13 = data['ISBN13'];
         const number_of_pages = data['number_of_pages'];
         const library_name = library.name;
+        const excluded = data['excluded'];
         
-        await Axios.post('http://localhost:3001/book/create', { title: title, author: author, rating: rating, language: language, genre: genre, description: description, publisher: publisher, publication_date: publication_date, ISBN13: ISBN13, number_of_pages: number_of_pages, library: library_name });
+        await Axios.post('http://localhost:3001/book/create', { title: title, author: author, rating: rating, language: language, genre: genre, description: description, publisher: publisher, publication_date: publication_date, ISBN13: ISBN13, number_of_pages: number_of_pages, library: library_name, excluded: excluded });
         
         navigate(`/`);
     };
