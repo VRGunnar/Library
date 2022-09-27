@@ -4,6 +4,8 @@ const cors = require("cors");
 const LibraryModel = require("./models/Library");
 const StudentModel = require("./models/Student");
 const BookModel = require("./models/Book");
+const ReferenceModel = require("./models/Reference");
+const referralCodes = require("referral-codes");
 
 const app = express();
 app.use(express.json());
@@ -236,6 +238,31 @@ app.post("/book/:id/edit", (req, res) => {
         .catch((err) => res.status(500).send(err.message));
     }
   });
+});
+
+//reference
+app.post("/create/reference", (req, res) => {
+  const code = referralCodes.generate({
+    length: 10,
+    charset: referralCodes.charset('alphanumeric'),
+  });
+  let date = new Date(new Date().setDate(new Date().getDate() + 30));
+  let date_ob = new Date(date);
+  let day = date_ob.getDate();
+  let month = date_ob.getMonth() + 1;
+  let year = date_ob.getFullYear();
+  due_date = (year + "-" + month + "-" + day);
+  const reference = new ReferenceModel(req.body);
+  reference.reference_code = code[0];
+  reference.due_date = due_date;
+  reference
+    .save()
+    .then((reference) => {
+      res.json(reference);
+    })
+    .catch((err) => {
+      res.status(500).send(err.message);
+    });
 });
 
 app.listen(3001, () => {
